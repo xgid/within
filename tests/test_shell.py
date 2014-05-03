@@ -117,4 +117,3 @@ def test_working_directory_failure():
 
     except UniqueTestingException:
         assert os.getcwd() == directory
-        pass  # everything went as expected

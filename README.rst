@@ -27,6 +27,27 @@ nested as necessary::
     with working_directory("my/file/path"):
         assert os.getcwd() == "my/file/path"
 
+Database
+--------
+The `manage` context manager manages database connections, ensuring that
+connections get closed::
+
+    from within.db import manage
+
+    ...
+
+    with manage(sqlite3.connect(database)) as cursor:
+        cursor.execute('SELECT * from table_name;')
+
+Manage also provides an automatic way to commit changes on close::
+
+    from within.db import manage
+
+    ...
+
+    with manage(sqlite3.connect(database), commit_on_close=True) as cursor:
+        cursor.execute('INSERT into table_name (column) value ?;', (value,))
+
 Development
 ===========
 Active development occurs on `Github <https://github.com/bcj/within/>`_. Pull

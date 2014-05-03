@@ -1,5 +1,5 @@
 """
-Tests for the shell context managers
+Tests for the shell context managers.
 """
 from __future__ import print_function
 

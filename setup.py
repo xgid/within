@@ -1,7 +1,7 @@
 """
 Install the within package.
 """
-from distultils.core import setup
+from distutils.core import setup
 
 
 setup(

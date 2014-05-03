@@ -12,7 +12,20 @@ Instalation
 
 Usage
 =====
-will go here
+Shell
+-----
+The ``working_directory`` context manager allows temporary changes to the
+current working directory. Within the with statement, the path will be set to
+the supplied working directory. As soon as the context is left (even in case
+or errors) the working directory is restored. These context managers can be
+nested as necessary::
+
+    from within.shell import working_directory
+
+    ...
+
+    with working_directory("my/file/path"):
+        assert os.getcwd() == "my/file/path"
 
 Development
 ===========

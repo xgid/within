@@ -1,6 +1,10 @@
 ======
 within
 ======
+.. image:: https://travis-ci.org/bcj/within.svg?branch=master
+.. image:: https://coveralls.io/repos/bcj/within/badge.png?branch=master
+  :target: https://coveralls.io/r/bcj/within?branch=master
+
 ``within`` is a collection of context managers designed to make everyday tasks
 simpler and safer to perform.
 

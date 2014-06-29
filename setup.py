@@ -6,7 +6,7 @@ from distutils.core import setup
 
 setup(
     name="within",
-    version="0.1.0",
+    version="0.2.0",
     author="Brendan Curran-Johnson",
     author_email="brendan@bcjbcj.ca",
     packages=['within'],

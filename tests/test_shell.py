@@ -158,6 +158,32 @@ def test_temporary_directory_with_files():
     assert not os.path.isdir(temp)
 
 
+def test_temporary_directory_directories():
+    """
+    Test that nested directories are deleted
+    """
+    from within.shell import temporary_directory
+
+    with temporary_directory() as tempdir:
+        temp = tempdir
+
+        assert os.path.isdir(temp)
+
+        directory = os.path.join(temp, 'lorem')
+
+        os.mkdir(directory)
+
+        for filename in ('foo', 'bar', 'baz'):
+            filepath = os.path.join(directory, filename)
+
+            with open(filepath, 'w') as fileobj:
+                fileobj.write('this file contains something')
+
+            assert os.path.isfile(filepath)
+
+    assert not os.path.isdir(temp)
+
+
 def test_temporary_directory_exception():
     """
     Test that temporary_directory deletes files in exceptional cases,

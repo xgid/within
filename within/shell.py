@@ -34,7 +34,19 @@ def temporary_directory():
     try:
         yield tempdir
     finally:
-        for filename in os.listdir(tempdir):
-            os.remove(os.path.join(tempdir, filename))
+        remove_directory(tempdir)
 
-        os.rmdir(tempdir)
+
+def remove_directory(directory):
+    """
+    Recursively delete a directory.
+    """
+    for name in os.listdir(directory):
+        path = os.path.join(directory, name)
+
+        if os.path.isdir(path):
+            remove_directory(path)
+        else:
+            os.remove(path)
+
+    os.rmdir(directory)

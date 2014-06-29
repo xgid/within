@@ -55,7 +55,8 @@ For extra style points, why not combine the two context managers::
 
     ...
 
-    with working_directory(temporary_directory()) as tempdir:
+    #Python 3 only. If on 2 use contextlib.nested
+    with temporary_directory() as tempdir, working_directory(tempdir): 
         # do stuff
 
 Database

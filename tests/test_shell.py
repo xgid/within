@@ -25,7 +25,7 @@ def cleanup():
 
             os.remove(filepath)
         except OSError as exception:
-            print("Error: could not delete {}".format(filepath))
+            print("Error: could not delete {0}".format(filepath))
 
     while TEMP_DIRS:
         directory = None
@@ -35,7 +35,7 @@ def cleanup():
 
             os.rmdir(directory)
         except OSError as exception:
-            print("Error: could not delete {}".format(directory))
+            print("Error: could not delete {0}".format(directory))
 
 
 @with_setup(cleanup, cleanup)
@@ -56,13 +56,13 @@ def test_working_directory():
     assert os.getcwd() == directory
 
     with working_directory(TEMP_DIRS[0]):
-        if 0 != os.system('touch {}'.format(tempfile_a)):
+        if 0 != os.system('touch {0}'.format(tempfile_a)):
             raise IOError("couldn't set up test")
 
         os.path.isdir(tempfile_a)
 
         with working_directory(TEMP_DIRS[1]):
-            if 0 != os.system('touch {}'.format(tempfile_a)):
+            if 0 != os.system('touch {0}'.format(tempfile_a)):
                 raise IOError("couldn't set up test")
 
             os.path.isdir(tempfile_b)
@@ -97,14 +97,14 @@ def test_working_directory_failure():
         assert os.getcwd() == directory
 
         with working_directory(TEMP_DIRS[0]):
-            if 0 != os.system('touch {}'.format(tempfile_a)):
+            if 0 != os.system('touch {0}'.format(tempfile_a)):
                 raise IOError("couldn't set up test")
 
             os.path.isdir(tempfile_a)
 
             try:
                 with working_directory(TEMP_DIRS[1]):
-                    if 0 != os.system('touch {}'.format(tempfile_a)):
+                    if 0 != os.system('touch {0}'.format(tempfile_a)):
                         raise IOError("couldn't set up test")
 
                     os.path.isdir(tempfile_b)

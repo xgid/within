@@ -122,7 +122,8 @@ def test_manage_commit():
 
     try:
         # shouldn't be possible if closed
-        the_cursor.execute('SELECT key, value FROM temp;')
+        the_cursor.execute('SELECT key, value FROM
+            temp;')
     except sqlite3.ProgrammingError:
         pass  # everything went as expected
     else:
@@ -141,7 +142,7 @@ def test_manage_commit():
     cursor = connection.cursor()
 
     cursor.execute('SELECT key, value FROM temp;')
-    assert set(cursor.fetchall()) == {('foo', 'bar'), ('lorem', 'ipsum')}
+    assert set(cursor.fetchall()) == set((('foo', 'bar'), ('lorem', 'ipsum')))
 
     cursor.close()
     connection.close()

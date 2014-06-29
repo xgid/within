@@ -17,6 +17,6 @@ def working_directory(directory):
     try:
         os.chdir(directory)
 
-        yield
+        yield directory
     finally:
         os.chdir(old_directory)

@@ -55,7 +55,9 @@ def test_working_directory():
 
     assert os.getcwd() == directory
 
-    with working_directory(TEMP_DIRS[0]):
+    with working_directory(TEMP_DIRS[0]) as the_directory:
+        assert the_directory == TEMP_DIRS[0]
+
         if 0 != os.system('touch {0}'.format(tempfile_a)):
             raise IOError("couldn't set up test")
 

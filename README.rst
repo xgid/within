@@ -31,6 +31,33 @@ nested as necessary::
     with working_directory("my/file/path"):
         assert os.getcwd() == "my/file/path"
 
+The ``temporary_directory`` context manager allows for the creation of
+temporary directories that only exist for the lifetime of the context manager.
+On close (normal, or with an Exception), the directory will be emptied then
+deleted. Exceptions will not be captured. The string path to the directory
+is returned on instantiation::
+
+    from within.shell import temporary_directory
+
+    ...
+
+    with temporary_directory() as tempdir:
+        assert os.path.isdir(tempdir)
+
+        directory = tempdir
+
+    assert not os.path.isdir(directory)
+
+
+For extra style points, why not combine the two context managers::
+
+    from within.shell import temporary_directory, working_directory
+
+    ...
+
+    with working_directory(temporary_directory()) as tempdir:
+        # do stuff
+
 Database
 --------
 The `manage` context manager manages database connections, ensuring that

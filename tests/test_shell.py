@@ -91,7 +91,7 @@ def test_working_directory_failure():
 
     class UniqueTestingException(Exception):
         """
-        An exception that nothing else
+        An exception that nothing else.
         """
         pass
 
@@ -119,3 +119,77 @@ def test_working_directory_failure():
 
     except UniqueTestingException:
         assert os.getcwd() == directory
+
+
+def test_temporary_directory_no_files():
+    """
+    Test that temporary_directory makes and deletes directories.
+    """
+    from within.shell import temporary_directory
+
+    with temporary_directory() as tempdir:
+        temp = tempdir
+
+        assert os.path.isdir(temp)
+
+    assert not os.path.isdir(temp)
+
+
+def test_temporary_directory_with_files():
+    """
+    Test that temporary_directory deletes directories when they contain
+    files.
+    """
+    from within.shell import temporary_directory
+
+    with temporary_directory() as tempdir:
+        temp = tempdir
+
+        assert os.path.isdir(temp)
+
+        for filename in ('foo', 'bar', 'baz'):
+            filepath = os.path.join(temp, filename)
+
+            with open(filepath, 'w') as fileobj:
+                fileobj.write('this file contains something')
+
+            assert os.path.isfile(filepath)
+
+    assert not os.path.isdir(temp)
+
+
+def test_temporary_directory_exception():
+    """
+    Test that temporary_directory deletes files in exceptional cases,
+    and doesn't eat exceptions
+    """
+    from within.shell import temporary_directory
+
+    class TestException(Exception):
+        def __init__(self, msg):
+            self.msg = msg
+
+        def __eq__(self, other):
+            return isinstance(other, TestException) and other.msg == self.msg
+
+    try:
+        with temporary_directory() as tempdir:
+            temp = tempdir
+
+            assert os.path.isdir(temp)
+
+            for filename in ('foo', 'bar', 'baz'):
+                filepath = os.path.join(temp, filename)
+
+                with open(filepath, 'w') as fileobj:
+                    fileobj.write('this file contains something')
+
+                assert os.path.isfile(filepath)
+
+                raise TestException("This is my error message")
+    except TestException as exception:
+        assert exception == TestException("This is my error message")
+    else:
+        raise AssertionError("exception was lost")
+
+    assert not os.path.isdir(temp)
